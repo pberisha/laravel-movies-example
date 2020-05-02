@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\ViewModels\MovieViewModel;
 use App\ViewModels\MoviesViewModel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+
 
 class MoviesController extends Controller
 {
@@ -16,6 +18,13 @@ class MoviesController extends Controller
      */
     public function index()
     {
+        // $popularMovies = Cache::remember('popularMovies', 60, function () {
+        //     return Http::withToken(config('services.tmdb.token'))
+        //     ->get('https://api.themoviedb.org/3/movie/popular')
+        //     ->json()['results'];
+        // });
+
+
         $popularMovies = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/movie/popular')
             ->json()['results'];
